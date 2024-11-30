@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace
+    command: /bin/bash -c "while sleep 1000; do :; done"
+    ports:
+      - "5002:5000"
+      - "5003:5001"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - "27017:27017"
